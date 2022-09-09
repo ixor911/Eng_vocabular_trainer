@@ -1,10 +1,11 @@
 import json
 import pandas as pd
+import codecs
 
 
 def json_to_dict(path):
 
-    with open(path) as file:
+    with open(path, encoding='utf-8') as file:
         vocabulary_dict = json.load(file)
 
     return vocabulary_dict
@@ -12,12 +13,17 @@ def json_to_dict(path):
 
 def get_profile(path, login):
 
-    vocabulary_dict = json_to_dict(path)
+    try:
+        vocabulary_dict = json_to_dict(path)
+    except Exception as err:
+        print('Cant open the dictionary.\nError: ')
+        print(err)
+        return [{"eng": [], "rus": [], "type": []}]
 
     try:
         return vocabulary_dict.get(login)
     except Exception as err:
-        print('Cant get profile\nError:')
+        print('Cant get profile.\nError: ')
         print(err)
         return [{"eng": [], "rus": [], "type": []}]
 
@@ -50,6 +56,8 @@ def get_profile_as_df(path, login):
     df = dict_to_dataframe(profile)
 
     return df
+
+
 
 
 

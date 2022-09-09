@@ -1,5 +1,6 @@
 from profile_loader import *
 from vocabulary_methods import *
+from program import trainer
 
-profile = get_profile_as_df('Dictionary.json', 'ixor')
-get_vocabulary_by_type(profile, ['noun', 'interjection'], 'cross')
+
+lol = trainer(path='Dictionary.json', login='ixor')
