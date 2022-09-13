@@ -1,6 +1,6 @@
 {
   "ixor": [
-    {"eng": "name", "rus": "имя", "type": ["noun"]},
-    {"eng": "hello", "rus": "привет", "type": ["interjection"]}
+    {"eng": "name", "rus": ["имя"], "type": ["noun"]},
+    {"eng": "hello", "rus": ["привет"], "type": ["interjection"]}
   ]
 }

@@ -47,7 +47,7 @@ def get_vocabulary_by_type(vocabulary_df, types_name, method='add'):
     return globals()[f"vocabulary_find_type_{method}"](vocabulary_df, types_name)
 
 
-def vocabulary_get_empty():
+def get_empty_vocabulary():
     return pd.DataFrame(data={"eng": [], "rus": [], "type": []})
 
 
