@@ -101,10 +101,15 @@ class trainer:
         if word.get('eng').replace(' ', '') == '' or word.get('eng').replace(' ', '') == "":
             error += "Eng can not be empty!\n"
 
-        if len(word.get('rus')[0]) == 0:
+        if len(word.get('rus')) == 0:
             error += "Rus can not be empty!\n"
-        elif word.get('rus')[0][0].replace(' ', '') == "" or word.get('rus')[0][0].replace(' ', '') == '':
+        elif word.get('rus')[0].replace(' ', '') == "" or word.get('rus')[0].replace(' ', '') == '':
             error += "Rus can not be empty!\n"
+
+        if len(word.get('type')) == 0:
+            error += "Type can not be empty!\n"
+        elif word.get('type')[0].replace(' ', '') == "" or word.get('type')[0].replace(' ', '') == '':
+            error += "Type can not be empty!\n"
 
         return error
 
@@ -219,17 +224,16 @@ class trainer:
 
         ans = input("Print a nuber of word or the ENG name:\n")
 
-        init_word = None
-        edited_word = None
-
         try:
-            id = int(ans)
-            init_word = self.vocabulary_df.iloc[id].copy()
-            edited_word = self.vocabulary_df.iloc[id].copy()
+            word_id = int(ans)
+            init_word = self.vocabulary_df.iloc[word_id].copy()
+            edited_word = self.vocabulary_df.iloc[word_id].copy()
             cls()
-
         except:
-            print('str')
+            word_id = self.vocabulary_df[self.vocabulary_df.isin([ans])['eng']].index[0]
+            init_word = self.vocabulary_df.iloc[word_id].copy()
+            edited_word = self.vocabulary_df.iloc[word_id].copy()
+            cls()
 
         while True:
             print(f"eng: {init_word['eng']} -> {edited_word['eng']}\n"
@@ -252,7 +256,7 @@ class trainer:
                     print(elem, end=',')
 
                 ans = input(" -> ")
-                edited_word['rus'] = ans
+                edited_word['rus'] = ans.split(',')
 
             elif code == '3':
 
@@ -260,16 +264,16 @@ class trainer:
                     print(elem, end=',')
 
                 ans = input(" -> ")
-                edited_word['type'] = ans
+                edited_word['type'] = ans.split(',')
 
             elif code == '0':
 
                 if self.check_word(edited_word) != "":
-                    print(self.check_word(edited_word))
                     cls()
+                    print(self.check_word(edited_word))
                     continue
 
-                self.vocabulary_df.iloc[id] = edited_word
+                self.vocabulary_df.iloc[word_id] = edited_word
                 self.buffer = pd.concat([self.buffer, edited_word], ignore_index=True)
 
                 cls()
